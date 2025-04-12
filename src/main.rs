@@ -1,6 +1,6 @@
-use axum::{response::{Html, IntoResponse}, routing::get, Router};
+use axum::{response::Html, routing::get, Router};
+use askama::Template;
 use tower_http::services::ServeDir;
-use tokio::fs;
 
 #[tokio::main]
 async fn main() {
@@ -18,11 +18,11 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn handler() -> impl IntoResponse {
-    match fs::read_to_string("templates/index.html").await {
-        Ok(index_file) => Html(index_file),
-        Err(_) => {
-            Html("<html><body><h1>Failed to load the page!</h1></body></html>".to_string())
-        }
-    }
+#[derive(Template)]
+#[template(path = "base.html")]
+struct BaseTemplate {}
+
+async fn handler() -> Html<String> {
+    let template = BaseTemplate {};
+    Html(template.render().unwrap())
 }

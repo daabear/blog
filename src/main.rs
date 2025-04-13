@@ -6,7 +6,7 @@ use tower_http::services::ServeDir;
 async fn main() {
     // build our application with a route
     let app = Router::new()
-        .route("/", get(render_base_page))
+        .route("/", get(render_home_page))
         .route("/blog", get(render_blog_page))
         .route("/credits", get(render_credits_page))
         .nest_service("/templates", ServeDir::new("templates"))
@@ -21,8 +21,8 @@ async fn main() {
 }
 
 #[derive(Template)]
-#[template(path = "base.html")]
-struct PageBaseTemplate;
+#[template(path = "home.html")]
+struct PageHomeTemplate;
 
 #[derive(Template)]
 #[template(path = "blog.html")]
@@ -32,8 +32,8 @@ struct PageBlogTemplate;
 #[template(path = "credits.html")]
 struct PageCreditsTemplate;
 
-async fn render_base_page() -> Html<String> {
-    Html(PageBaseTemplate.render().unwrap())
+async fn render_home_page() -> Html<String> {
+    Html(PageHomeTemplate.render().unwrap())
 }
 
 async fn render_blog_page() -> Html<String> {

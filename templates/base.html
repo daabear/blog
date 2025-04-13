@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="/assets/styles/output.css">
     <link rel="icon" href="/assets/images/cute.png" type="image/png">
 </head>
-<body class="text-gray-300">
+<body class="flex flex-col min-h-screen">
     {% include "components/navbar.html" %}  
 
-    <main class="px-6 py-4">
+    <main class="flex-1">
         {% block content %}{% endblock %}
-    </main>
-
-    {% block credits %}{% endblock %}
+    </main> 
 
     {% include "components/footer.html" %}  
 </body>

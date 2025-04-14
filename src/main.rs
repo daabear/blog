@@ -1,23 +1,25 @@
-use axum::{response::Html, routing::get, Router};
+use axum::{response::{Html, IntoResponse}, routing::get, Router, http::StatusCode};
 use askama::Template;
 use tower_http::services::ServeDir;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // build our application with a route
-    let app = Router::new()
-        .route("/", get(render_home_page))
-        .route("/blog", get(render_blog_page))
-        .route("/credits", get(render_credits_page))
-        .nest_service("/templates", ServeDir::new("templates"))
-        .nest_service("/assets", ServeDir::new("assets"));
+    let app = create_router();
 
     // run it
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
-        .await
-        .unwrap();
-    println!("listening on {}", listener.local_addr().unwrap());
-    axum::serve(listener, app).await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+    axum::serve(listener, app).await?;
+
+    Ok(())
+}
+
+fn create_router() -> Router {  
+    Router::new()
+    .route("/", get(render_home_page))
+    .route("/blog", get(render_blog_page))
+    .route("/credits", get(render_credits_page))
+    .nest_service("/assets", ServeDir::new("assets"))
 }
 
 #[derive(Template)]
@@ -32,14 +34,23 @@ struct PageBlogTemplate;
 #[template(path = "credits.html")]
 struct PageCreditsTemplate;
 
-async fn render_home_page() -> Html<String> {
-    Html(PageHomeTemplate.render().unwrap())
+async fn render_home_page() -> impl IntoResponse {
+    match PageHomeTemplate.render() {
+        Ok(html) => Html(html).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Error rendering template").into_response(),
+    }
 }
 
-async fn render_blog_page() -> Html<String> {
-    Html(PageBlogTemplate.render().unwrap())
+async fn render_blog_page() -> impl IntoResponse {
+    match PageBlogTemplate.render() {
+        Ok(html) => Html(html).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Error rendering template").into_response(),
+    }
 }
 
-async fn render_credits_page() -> Html<String> {
-    Html(PageCreditsTemplate.render().unwrap())
+async fn render_credits_page() -> impl IntoResponse {
+    match PageCreditsTemplate.render() {
+        Ok(html) => Html(html).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Error rendering template").into_response(),
+    }
 }

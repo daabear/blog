@@ -59,10 +59,12 @@ fn render_template<T: Template>(template: T) -> impl IntoResponse {
 }
 
 async fn render_blog_page() -> impl IntoResponse {
-    let posts = match post::load_posts_from_directory("content/posts") {
+    let mut posts = match post::load_posts_from_directory("content/posts") {
         Ok(posts) => posts,
         Err(_) => Vec::new(),
     };
+
+    posts.sort_by(|a, b| b.post_data.date.cmp(&a.post_data.date));
 
     render_template(PageBlogTemplate { posts })
 }

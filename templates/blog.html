@@ -9,7 +9,7 @@
                 <a href="/blog/{{ post.post_data.slug }}" class="text-2xl font-semibold mt-8 hover:underline">
                     {{ post.post_data.title }}
                 </a>
-                <p class="text-sm">{{ post.post_data.date.format("%B %d, %Y") }}</p>
+                <p class="text-gray-400">{{ post.post_data.date.format("%B %d, %Y") }}</p>
                 <p>{{ post.post_data.summary }}</p>
             </li>
         {% endfor %}

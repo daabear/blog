@@ -3,7 +3,16 @@
 {% block content %}
 <div class="mx-auto max-w-6xl py-4 px-4 mt-28">
     <h1 class="text-4xl font-bold">blog</h1>
-    <p class="mt-8">nothing yet</p>
-    <p>check back later</p>
+    <ul class="space-y-6 mt-8">
+        {% for post in posts %}
+            <li>
+                <a href="/blog/{{ post.post_data.slug }}" class="text-2xl font-semibold mt-8 hover:underline">
+                    {{ post.post_data.title }}
+                </a>
+                <p class="text-sm">{{ post.post_data.date.format("%B %d, %Y") }}</p>
+                <p>{{ post.post_data.summary }}</p>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}  

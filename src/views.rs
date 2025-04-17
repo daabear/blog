@@ -20,3 +20,7 @@ pub struct PageCreditsTemplate;
 pub struct PagePostTemplate {
     pub post: BlogPost,
 }
+
+#[derive(Template)]
+#[template(path = "notfound.html")]
+pub struct PageNotFoundTemplate;

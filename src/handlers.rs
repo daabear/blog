@@ -1,6 +1,6 @@
 use askama::Template;
 use axum::{extract::Path, http::StatusCode, response::{Html, IntoResponse}};
-use crate::{post, views::{PageBlogTemplate, PageCreditsTemplate, PageHomeTemplate, PagePostTemplate}};
+use crate::{post, views::{PageBlogTemplate, PageCreditsTemplate, PageHomeTemplate, PageNotFoundTemplate, PagePostTemplate}};
 
 
 pub async fn render_home_page() -> impl IntoResponse {
@@ -9,6 +9,10 @@ pub async fn render_home_page() -> impl IntoResponse {
 
 pub async fn render_credits_page() -> impl IntoResponse {
     render_template(PageCreditsTemplate)
+}
+
+pub async fn render_not_found_page() -> impl IntoResponse {
+    render_template(PageNotFoundTemplate)
 }
 
 pub fn render_template<T: Template>(template: T) -> impl IntoResponse {

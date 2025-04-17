@@ -1,10 +1,10 @@
 <nav class="flex justify-between items-center px-6 py-4">
-    <a href="/">
+    <a href="/" hx-get="/" hx-target="main" hx-select="main" hx-push-url="true">
         <img src="/assets/images/cute.png" alt="daabear" class="w-10 h-10 rounded-full transition-transform duration-300 
         hover:scale-110" />
     </a>
     <div class="flex gap-6 items-center">
-        <a href="/blog" class="hover:underline">blog</a>
-        <a href="https://github.com/daabear" class="hover:underline">github</a>
+        <a href="/blog" hx-get="/blog" hx-target="main" hx-push-url="true" hx-select="main" class="hover:underline">blog</a>
+        <a href="https://github.com/daabear" class="hover:underline" target="_blank" rel="noopener">github</a>
     </div>
 </nav>

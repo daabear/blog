@@ -9,13 +9,14 @@
     <meta name="keywords" content="daabear, personal website, blog, rust, htmx, tailwind">
     <link rel="stylesheet" href="/assets/styles/output.css">
     <link rel="icon" href="/assets/images/cute.png" type="image/png">
+    <script src="/assets/js/htmx.min.js"></script>
 </head>
 <body class="flex flex-col min-h-screen">
     {% include "components/navbar.html" %}  
 
-    <main class="flex-1">
+    <main id="main" class="flex-1">
         {% block content %}{% endblock %}
-    </main> 
+    </main>
 
     {% include "components/footer.html" %}  
 </body>

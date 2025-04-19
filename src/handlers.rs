@@ -39,6 +39,6 @@ pub async fn render_blog_post(Path(slug): Path<String>) -> impl IntoResponse {
     
     match posts.into_iter().find(|p| p.post_data.slug == slug) {
         Some(post) => render_template(PagePostTemplate { post }).into_response(),
-        None => (StatusCode::NOT_FOUND, "Post not found").into_response(),
+        None => render_template(PageNotFoundTemplate).into_response(),
     }
 }

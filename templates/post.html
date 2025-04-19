@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="mx-auto max-w-6xl py-4 px-4 mt-28">
+<div class="mx-auto max-w-xl py-4 px-4 mt-28">
     <h1 class="text-4xl font-bold">{{ post.post_data.title }}</h1>
     <p class="text-gray-600 text-sm mt-2">{{ post.post_data.date.format("%B %d, %Y") }}</p>
     
-    <div class="mt-8 prose">
+    <div class="mt-8 mx-auto">
         {{ post.content | safe }}
     </div>
 </div>
